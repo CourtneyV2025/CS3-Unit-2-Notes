@@ -30,3 +30,22 @@ print(iris.head())
 sns.pairplot(iris, hue='species', height=2.5) 
 plt.savefig('sns-pairplot.png', bbox_inches='tight')
 plt.close()
+
+# Load another dataset
+tips = sns.load_dataset('tips')
+print(tips.head())
+tips['tip_percent'] = 100 * tips['tip'] / tips['total_bill']
+#FACET GRID: compare multiple dimensions
+grid = sns.FacetGrid(tips, row='sex', col='time', margin_titles=True)
+grid.map(plt.hist, "tip_percent", bins=np.linspace(0, 40, 15));
+plt.savefig('sns-facetgrid.png', bbox_inches='tight')
+plt.close()  
+
+# CATEGORIAL PLOT: look at distrubution of parameter with bins defined by another paramete 
+sns.catplot(x='day', y='total_bill', hue='sex', data=tips, kind='box')
+plt.savefig('sns-catplot.png', bbox_inches='tight')
+plt.close() 
+
+sns.jointplot(x='total_bill', y='tip', data=tips, kind='hex')
+plt.savefig('sns-jointplot.png', bbox_inches='tight')
+plt.close()  
